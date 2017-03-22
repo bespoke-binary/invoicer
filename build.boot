@@ -4,30 +4,33 @@
                  [adzerk/boot-cljs "1.7.228-2" :scope "test"]
                  [testdouble/clojurescript.csv "0.2.0" :scope "test"]
 
-                 [adzerk/boot-cljs-repl   "0.3.3"  :scope "test"]
-                 [com.cemerick/piggieback "0.2.1"  :scope "test"]
-                 [weasel                  "0.7.0"  :scope "test"]
-                 [org.clojure/tools.nrepl "0.2.12" :scope "test"]])
+                 [com.cemerick/piggieback "0.2.1"  :scope "test"]])
+
+(swap! boot.repl/*default-middleware*
+       conj 'cemerick.piggieback/wrap-cljs-repl)
 
 (require
- '[adzerk.boot-cljs :refer [cljs]]
- '[adzerk.boot-cljs-repl :refer [cljs-repl start-repl]])
+ '[adzerk.boot-cljs :refer [cljs]])
+
+(task-options!
+ pom {:project 'bespoke-binary/invoicer
+      :version "0.1.0-SNAPSHOT"
+      :description "Produce pretty invoices from CSV files"}
+ cljs {:compiler-options {:target :nodejs}})
 
 (deftask dev
   "Watch/compile files in development"
   []
   (comp
    (watch)
-   (cljs-repl)
+   (notify :visual true)
    (cljs :source-map true
-         :optimizations :none
-         :compiler-options {:target :nodejs})
+         :optimizations :none)
    (target)))
 
 (deftask prod
   "Compile for production"
   []
   (comp
-   (cljs :optimizations :advanced
-         :compiler-options {:target :nodejs})
+   (cljs :optimizations :advanced)
    (target)))

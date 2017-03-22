@@ -4,8 +4,15 @@
 
 Download [Boot](http://boot-clj.com/) and get started:
 
-```
+``` shell
 boot dev
+```
+
+## Starting a REPL
+
+``` clojure
+(require 'cljs.repl.node)
+(cemerick.piggieback/cljs-repl (cljs.repl.node/repl-env))
 ```
 
 ## License
