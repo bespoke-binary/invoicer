@@ -31,7 +31,9 @@
 \usepackage{fp} % Fixed-point arithmetic
 \usepackage{calc} % Counters for totaling hours and cost
 \usepackage{longtable}
+\usepackage{setspace}
 
+\onehalfspacing
 
 \pagestyle{empty} % No page numbers
 \linespread{1.5} % Line spacing
@@ -60,7 +62,7 @@
     \newcommand*{\unitrow}[5]{%
          \addtocounter{cost}{1000 * \real{##3} * \real{##4}}%
          \addtocounter{subcost}{1000 * \real{##3} * \real{##4}}%
-         ##1 & ##2 & \formatNumber{##3} ##5 & \$\formatNumber{##4} & \$\FPmul{\cost}{##3}{##4}\formatNumber{\cost}%
+         ##1 & {\begin{singlespace*} \footnotesize ##2 \end{singlespace*}} & \formatNumber{##3} ##5 & \$\formatNumber{##4} & \$\FPmul{\cost}{##3}{##4}\formatNumber{\cost}%
          \\
     }
     % Create a new row from title and expense amount
@@ -98,7 +100,8 @@
     \renewcommand{\tabcolsep}{0.8ex}
     \setlength\LTleft{0pt}
     \setlength\LTright{0pt}
-    \begin{longtable}{@{\extracolsep{\fill}\hspace{\tabcolsep}} l l r r r }
+
+    \begin{longtable}{@{\extracolsep{\fill}\hspace{\tabcolsep}} l p{70mm} r r r }
     \hline
       {\bf Date} & {\bf Description of Services} & \multicolumn{1}{c}{\bf Quantity} & \multicolumn{1}{c}{\bf Unit Price} & \multicolumn{1}{c}{\bf Amount} \\*
     \hline\hline
