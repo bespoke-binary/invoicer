@@ -32,14 +32,13 @@
 \usepackage{calc} % Counters for totaling hours and cost
 \usepackage{longtable}
 
+
 \pagestyle{empty} % No page numbers
-\linespread{1.5}
+\linespread{1.5} % Line spacing
 
 \setlength{\doublerulesep}{\arrayrulewidth} % Double rules look like one thick one
 
 % Command for setting a default hourly rate
-\newcommand{\hourlyrate}[1]{\def \@hourlyrate {#1}}
-\hourlyrate{1}
 \newcommand{\feetype}[1]{
     \textbf{#1}
     \\
@@ -57,11 +56,11 @@
 
 % Create an invoice table
 \newenvironment{invoiceTable}{
-    % Create a new row from title, unit quantity, unit rate, and unit name
-    \newcommand*{\unitrow}[4]{%
-         \addtocounter{cost}{1000 * \real{##2} * \real{##3}}%
-         \addtocounter{subcost}{1000 * \real{##2} * \real{##3}}%
-         ##1 & \formatNumber{##2} ##4 & \$\formatNumber{##3} & \$\FPmul{\cost}{##2}{##3}\formatNumber{\cost}%
+    % Create a new row from title, description, unit quantity, unit rate, unit name
+    \newcommand*{\unitrow}[5]{%
+         \addtocounter{cost}{1000 * \real{##3} * \real{##4}}%
+         \addtocounter{subcost}{1000 * \real{##3} * \real{##4}}%
+         ##1 & ##2 & \formatNumber{##3} ##5 & \$\formatNumber{##4} & \$\FPmul{\cost}{##3}{##4}\formatNumber{\cost}%
          \\
     }
     % Create a new row from title and expense amount
@@ -73,13 +72,13 @@
     }
 
     \newcommand{\subtotalNoStar}{
-        {\bf Subtotal} & {\bf \total{subhours} hours} &  & {\bf \$\total{subcost}}
+        {\bf Subtotal} &  & {\bf \total{subhours} hours} &  & {\bf \$\total{subcost}}
         \setcounter{subcost}{0}
         \setcounter{subhours}{0}
         \\*[1.5ex]
     }
     \newcommand{\subtotalStar}{
-        {\bf Subtotal} & & & {\bf \$\total{subcost}}
+        {\bf Subtotal} & & & & {\bf \$\total{subcost}}
         \setcounter{subcost}{0}
         \\*[1.5ex]
     }
@@ -90,23 +89,22 @@
          \subtotalNoStar%
     }
 
-
     % Create a new row from date and hours worked (use stored fee type and hourly rate)
-    \newcommand*{\hourrow}[2]{%
-        \addtocounter{hours}{1000 * \real{##2}}%
-        \addtocounter{subhours}{1000 * \real{##2}}%
-        \unitrow{##1}{##2}{\@hourlyrate}{hours}%
+    \newcommand*{\hourrow}[4]{%
+        \addtocounter{hours}{1000 * \real{##3}}%
+        \addtocounter{subhours}{1000 * \real{##3}}%
+        \unitrow{##1}{##2}{##3}{##4}{hours}%
     }
     \renewcommand{\tabcolsep}{0.8ex}
     \setlength\LTleft{0pt}
     \setlength\LTright{0pt}
-    \begin{longtable}{@{\extracolsep{\fill}\hspace{\tabcolsep}} l r r r }
+    \begin{longtable}{@{\extracolsep{\fill}\hspace{\tabcolsep}} l l r r r }
     \hline
-    {\bf Description of Services} & \multicolumn{1}{c}{\bf Quantity} & \multicolumn{1}{c}{\bf Unit Price} & \multicolumn{1}{c}{\bf Amount} \\*
+      {\bf Date} & {\bf Description of Services} & \multicolumn{1}{c}{\bf Quantity} & \multicolumn{1}{c}{\bf Unit Price} & \multicolumn{1}{c}{\bf Amount} \\*
     \hline\hline
     \endhead
 }{
     \hline\hline\hline
-    {\bf Balance Due} & & & {\bf \$\total{cost}} \\
+    {\bf Balance Due} & & & & {\bf \$\total{cost}} \\
     \end{longtable}
 }
