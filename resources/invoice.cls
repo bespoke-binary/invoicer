@@ -37,7 +37,7 @@
 \onehalfspacing
 
 \pagestyle{empty} % No page numbers
-\linespread{1.5} % Line spacing
+\linespread{1.2} % Line spacing
 
 \setlength{\doublerulesep}{\arrayrulewidth} % Double rules look like one thick one
 
