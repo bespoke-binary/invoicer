@@ -11,7 +11,8 @@ boot dev
 ## Starting a REPL
 
 ``` clojure
-(require 'cljs.repl.node)
+(require 'cljs.repl.node
+         'cemerick.piggieback)
 (cemerick.piggieback/cljs-repl (cljs.repl.node/repl-env))
 ```
 
