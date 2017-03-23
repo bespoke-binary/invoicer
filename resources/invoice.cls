@@ -32,6 +32,7 @@
 \usepackage{calc} % Counters for totaling hours and cost
 \usepackage{longtable}
 \usepackage{setspace}
+\usepackage[table]{xcolor}
 
 \onehalfspacing
 
@@ -39,6 +40,8 @@
 \linespread{1.5} % Line spacing
 
 \setlength{\doublerulesep}{\arrayrulewidth} % Double rules look like one thick one
+
+\definecolor{lightgray}{gray}{0.9}
 
 % Command for setting a default hourly rate
 \newcommand{\feetype}[1]{
@@ -101,7 +104,8 @@
     \setlength\LTleft{0pt}
     \setlength\LTright{0pt}
 
-    \begin{longtable}{@{\extracolsep{\fill}\hspace{\tabcolsep}} l p{70mm} r r r }
+    \rowcolors{1}{}{lightgray}
+    \begin{longtable}{@{\extracolsep{\fill}\hspace{\tabcolsep}} l p{70mm} c c c }
     \hline
       {\bf Date} & {\bf Description of Services} & \multicolumn{1}{c}{\bf Quantity} & \multicolumn{1}{c}{\bf Unit Price} & \multicolumn{1}{c}{\bf Amount} \\*
     \hline\hline
